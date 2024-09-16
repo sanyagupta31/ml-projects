@@ -1,0 +1,284 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNXhvWmNZ93piNUpxi7FyIJ",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/sanyagupta31/LLM-based-clone/blob/main/gradient%203d%20placement%20data%20set\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 10,
+      "metadata": {
+        "id": "IEL3fCsrz3ic"
+      },
+      "outputs": [],
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "from sklearn.datasets import make_regression\n",
+        "import matplotlib.pyplot as plt"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data = pd.read_csv('/content/placement (1).csv')"
+      ],
+      "metadata": {
+        "id": "8Bt6wDHe0jBV"
+      },
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "X=data[['cgpa']].values\n",
+        "y=data['package'].values"
+      ],
+      "metadata": {
+        "id": "ne7ChHNW0pwD"
+      },
+      "execution_count": 12,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "X,y=make_regression(n_samples=4,n_features=1,n_informative=1,n_targets=1,noise=80,random_state=13)"
+      ],
+      "metadata": {
+        "id": "9ktto2OM1XKl"
+      },
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "plt.scatter(X,y)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 447
+        },
+        "id": "TkqXtm3711-d",
+        "outputId": "b25f58f8-e6de-4a48-f454-dbad088bc53a"
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<matplotlib.collections.PathCollection at 0x7fdae03657e0>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 14
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 640x480 with 1 Axes>"
+            ],
+            "image/png": "iVBORw0KGgoAAAANSUhEUgAAAi0AAAGdCAYAAADey0OaAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjcuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/bCgiHAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAnRElEQVR4nO3de3TU9Z3/8deEmAQ0MzFAMokEDFGByEWRJcaigMQScKmsdK1cLCALXoCeQntEttgQtQ1aVqkuhdYWsEeolz1gRW26XESkBrBgjqYgx0AUkASULDMhNENIPr8/lPkxJlxmkpnJB56Pc75Hvp/v5zvzfhvNvPjexmGMMQIAAGjjYqJdAAAAwIUgtAAAACsQWgAAgBUILQAAwAqEFgAAYAVCCwAAsAKhBQAAWIHQAgAArBAb7QJaqrGxUYcOHVJiYqIcDke0ywEAABfAGKOamhqlp6crJubCjqFYH1oOHTqkjIyMaJcBAABCcODAAXXp0uWC5oYcWjZv3qxf/epX2rFjhyorK7VmzRqNHj3av33SpEl68cUXA/YZPny4iouL/evV1dWaOXOm1q5dq5iYGI0ZM0a//vWvdcUVV1xwHYmJiZK+btrpdIbaDgAAiCCv16uMjAz/5/iFCDm01NbWql+/frr//vt19913NzsnPz9fy5cv96/Hx8cHbB8/frwqKyu1bt061dfXa/LkyZo2bZpWrVp1wXWcPiXkdDoJLQAAWCaYSztCDi0jRozQiBEjzjknPj5ebre72W27d+9WcXGxPvjgAw0YMECS9Pzzz2vkyJFauHCh0tPTQy0NAABchMJ699CmTZuUkpKiHj166KGHHtLRo0f920pKSpSUlOQPLJKUl5enmJgYbdu27ayv6fP55PV6AxYAAHDxC1toyc/P1x//+Edt2LBBTz31lN59912NGDFCDQ0NkqSqqiqlpKQE7BMbG6vk5GRVVVWd9XWLiorkcrn8CxfhAgBwaQjb3UP33nuv/899+vRR3759lZWVpU2bNmnYsGEhv+7cuXM1e/Zs//rpC3kAAMDFLWIPl+vevbs6deqk8vJySZLb7daRI0cC5pw6dUrV1dVnvQ5G+vo6mdMX3XLxLQAAl46IhZaDBw/q6NGjSktLkyTl5ubq2LFj2rFjh3/Oxo0b1djYqJycnEiVBQAALBHy6aHjx4/7j5pIUkVFhUpLS5WcnKzk5GQVFhZqzJgxcrvd2rt3rx555BFdc801Gj58uCSpV69eys/P19SpU7V06VLV19drxowZuvfee7lzCAAANOEwxphQdty0aZOGDh3aZHzixIlasmSJRo8erQ8//FDHjh1Tenq6vvvd7+qJJ55Qamqqf251dbVmzJgR8HC55557LqiHy3m9XrlcLnk8Hk4VAQBgiVA+v0MOLW0FoQUAgNbX0Gi0vaJaR2rqlJKYoIGZyWoX03rf8RfK57f13z0EAABaV3FZpQrX7lKlp84/luZKUMGobOX3TotaXRG7EBcAALR9xWWVeuilnQGBRZKqPHV66KWdKi6rjFJlhBYAAPCNhkajwrW71Nx1I6fHCtfuUkNjdK4sIbQAAABJ0vaK6iZHWM5kJFV66rS9ojpyRZ2B0AIAACRJR2rOHlhCmdfaCC0AAECSlJKY0KrzWhuhBQAASJIGZiYrzZWgs93Y7NDXdxENzEyOZFl+hBYAACBJahfjUMGobElqElxOrxeMym7V57UEg9ACAAD88nunacmE/nK7Ak8BuV0JWjKhf1Sf08LD5QAAQID83mm6I9sd1ifihoLQAgAAmmgX41BuVsdolxGA00MAAMAKhBYAAGAFQgsAALACoQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUILQAAwAqEFgAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACsQGgBAABWILQAAAArEFoAAIAVCC0AAMAKhBYAAGAFQgsAALBCyKFl8+bNGjVqlNLT0+VwOPT666/7t9XX12vOnDnq06ePLr/8cqWnp+uHP/yhDh06FPAaV199tRwOR8CyYMGCkJsBAAAXr5BDS21trfr166fFixc32XbixAnt3LlTjz32mHbu3KnVq1drz549+t73vtdk7uOPP67Kykr/MnPmzFBLAgAAF7HYUHccMWKERowY0ew2l8uldevWBYz993//twYOHKj9+/era9eu/vHExES53e5QywAAAJeIiF3T4vF45HA4lJSUFDC+YMECdezYUTfeeKN+9atf6dSpU+d8HZ/PJ6/XG7AAAICLX8hHWoJRV1enOXPmaOzYsXI6nf7xH/3oR+rfv7+Sk5P1/vvva+7cuaqsrNQzzzxz1tcqKipS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xMfHKz4+vtVrBAAAbVtErmlZvny5UlJSdOedd55zXmlpqSQpLS0tAlUBAACbhP1IS2Njo5YvX66JEycqNvb/v93evXu1atUqjRw5Uh07dtRHH32kWbNm6bbbblPfvn3DXRYAALBM2EPL+vXrtX//ft1///0B43FxcVq/fr0WLVqk2tpaZWRkaMyYMZo3b164SwIAABaK2IW44RLKhTwAACC6Qvn85ruHAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACsQGgBAABWILQAAAArEFoAAIAVCC0AAMAKhBYAAGAFQgsAALACoQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUILQAAwAqEFgAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACsQGgBAABWILQAAAArEFoAAIAVCC0AAMAKhBYAAGAFQgsAALACoQUAAFghrKFl/vz5cjgcAUvPnj392+vq6jR9+nR17NhRV1xxhcaMGaPDhw+HsyQAAGCpsB9puf7661VZWelftmzZ4t82a9YsrV27Vq+99preffddHTp0SHfffXe4SwIAABaKDfsbxMbK7XY3Gfd4PPrDH/6gVatW6fbbb5ckLV++XL169dLWrVt18803h7s0AABgkbAfafn000+Vnp6u7t27a/z48dq/f78kaceOHaqvr1deXp5/bs+ePdW1a1eVlJSEuywAAGCZsB5pycnJ0YoVK9SjRw9VVlaqsLBQt956q8rKylRVVaW4uDglJSUF7JOamqqqqqqzvqbP55PP5/Ove73ecJUPAADakLCGlhEjRvj/3LdvX+Xk5Khbt2569dVX1b59+5Bes6ioSIWFha1VIgAAsEREb3lOSkrSddddp/Lycrndbp08eVLHjh0LmHP48OFmr4E5be7cufJ4PP7lwIEDYa4aAAC0BRENLcePH9fevXuVlpamm266SZdddpk2bNjg375nzx7t379fubm5Z32N+Ph4OZ3OgAUAAFz8wnp66Kc//alGjRqlbt266dChQyooKFC7du00duxYuVwuTZkyRbNnz1ZycrKcTqdmzpyp3Nxc7hwCAABNhDW0HDx4UGPHjtXRo0fVuXNnDRo0SFu3blXnzp0lSc8++6xiYmI0ZswY+Xw+DR8+XL/5zW/CWRIAALCUwxhjol1ES3i9XrlcLnk8Hk4VAQBgiVA+v/nuIQAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACsQGgBAABWILQAAAArEFoAAIAVCC0AAMAKhBYAAGAFQgsAALACoQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUILQAAwAqEFgAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACsQGgBAABWILQAAAArhDW0FBUV6V/+5V+UmJiolJQUjR49Wnv27AmYM2TIEDkcjoDlwQcfDGdZAADAQmENLe+++66mT5+urVu3at26daqvr9d3v/td1dbWBsybOnWqKisr/cvTTz8dzrIAAICFYsP54sXFxQHrK1asUEpKinbs2KHbbrvNP96hQwe53e5wlgIAACwX0WtaPB6PJCk5OTlgfOXKlerUqZN69+6tuXPn6sSJE2d9DZ/PJ6/XG7AAAICLX1iPtJypsbFRP/7xj/Wd73xHvXv39o+PGzdO3bp1U3p6uj766CPNmTNHe/bs0erVq5t9naKiIhUWFkaqbAAA0EY4jDEmEm/00EMP6S9/+Yu2bNmiLl26nHXexo0bNWzYMJWXlysrK6vJdp/PJ5/P51/3er3KyMiQx+OR0+kMS+0AAKB1eb1euVyuoD6/I3KkZcaMGXrzzTe1efPmcwYWScrJyZGks4aW+Ph4xcfHh6VOAADQdoU1tBhjNHPmTK1Zs0abNm1SZmbmefcpLS2VJKWlpYWzNAAAYJmwhpbp06dr1apV+vOf/6zExERVVVVJklwul9q3b6+9e/dq1apVGjlypDp27KiPPvpIs2bN0m233aa+ffuGszQAAGCZsF7T4nA4mh1fvny5Jk2apAMHDmjChAkqKytTbW2tMjIy9G//9m+aN2/eBZ/fCuWcGAAAiK42d03L+fJQRkaG3n333XCWAAAALhJ89xAAALACoQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUi9oWJAACEqqHRaHtFtY7U1CklMUEDM5PVLqb5Z4Hh4kVoAQC0acVllSpcu0uVnjr/WJorQQWjspXfm698uZRweggA0GYVl1XqoZd2BgQWSary1Omhl3aquKwySpUhGggtAIA2qaHRqHDtLjX3bPXTY4Vrd6mhMWzfRoM2htACAGiTtldUNznCciYjqdJTp+0V1ZErClFFaAEAtElHas4eWEKZB/sRWgAAbVJKYkKrzoP9CC0AgDZpYGay0lwJOtuNzQ59fRfRwMzkSJaFKCK0AADapHYxDhWMypakJsHl9HrBqGye13IJIbQAANqs/N5pWjKhv9yuwFNAbleClkzoz3NaLjE8XA4A0Kbl907THdlunogLQgsAoO1rF+NQblbHaJeBKOP0EAAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAK3D3UDMaGg231gEA0MYQWr6luKxShWt3BXyzaJorQQWjsnmIEQAAUcTpoTMUl1XqoZd2Nvkq9CpPnR56aaeKyyqjVBkAACC0fKOh0ahw7S6ZZradHitcu0sNjc3NAAAA4UZo+cb2iuomR1jOZCRVeuq0vaI6ckUBAAA/Qss3jtScPbCEMg8AALQuQss3UhITzj8piHkAAKB1EVq+MTAzWWmuBJ3txmaHvr6LaGBmciTLAgAA3yC0fKNdjEMFo7IlqUlwOb1eMCqb57UAABAlhJYz5PdO05IJ/eV2BZ4CcrsStGRCf57TAgBAFPFwuW/J752mO7LdPBEXAIA2htDSjHYxDuVmdYx2GQAA4AycHgIAAFYgtAAAACsQWgAAgBXaRGhZvHixrr76aiUkJCgnJ0fbt2+PdkkAAKCNiXpoeeWVVzR79mwVFBRo586d6tevn4YPH64jR45EuzQAANCGRD20PPPMM5o6daomT56s7OxsLV26VB06dNCyZcuiXRoAAGhDohpaTp48qR07digvL88/FhMTo7y8PJWUlDS7j8/nk9frDVgAAMDFL6qh5auvvlJDQ4NSU1MDxlNTU1VVVdXsPkVFRXK5XP4lIyMjEqUCAIAoi/rpoWDNnTtXHo/Hvxw4cCDaJQEAgAiI6hNxO3XqpHbt2unw4cMB44cPH5bb7W52n/j4eMXHx0eiPAAA0IZE9UhLXFycbrrpJm3YsME/1tjYqA0bNig3NzeKlQEAgLYm6t89NHv2bE2cOFEDBgzQwIEDtWjRItXW1mry5MnRLg0AALQhUQ8tP/jBD/Tll1/q5z//uaqqqnTDDTeouLi4ycW5AADg0uYwxphoF9ESXq9XLpdLHo9HTqcz2uUAAIALEMrnt3V3DwEAgEsToQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUILQAAwAqEFgAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACsQGgBAABWILQAAAArEFoAAIAVCC0AAMAKhBYAAGAFQgsAALACoQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUILQAAwAqEFgAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFcISWj777DNNmTJFmZmZat++vbKyslRQUKCTJ08GzHE4HE2WrVu3hqMkAABgudhwvOgnn3yixsZG/fa3v9U111yjsrIyTZ06VbW1tVq4cGHA3PXr1+v666/3r3fs2DEcJQEAAMuFJbTk5+crPz/fv969e3ft2bNHS5YsaRJaOnbsKLfbHY4yAADARSRi17R4PB4lJyc3Gf/e976nlJQUDRo0SG+88cZ5X8fn88nr9QYsAADg4heR0FJeXq7nn39eDzzwgH/siiuu0H/913/ptdde01tvvaVBgwZp9OjR5w0uRUVFcrlc/iUjIyPc5QO4AA2NRiV7j+rPpV+oZO9RNTSaaJcE4CLjMMZc8G+WRx99VE899dQ55+zevVs9e/b0r3/xxRcaPHiwhgwZot///vfn3PeHP/yhKioq9N577511js/nk8/n8697vV5lZGTI4/HI6XReYCcAWlNxWaUK1+5SpafOP5bmSlDBqGzl906LYmUA2iqv1yuXyxXU53dQoeXLL7/U0aNHzzmne/fuiouLkyQdOnRIQ4YM0c0336wVK1YoJubcB3YWL16sJ598UpWVlRdaUkhNA2g9xWWVeuilnfr2LxLHN/9cMqE/wQVAE6F8fgd1IW7nzp3VuXPnC5r7xRdfaOjQobrpppu0fPny8wYWSSotLVVaGr/cAFs0NBoVrt3VJLBIktHXwaVw7S7dke1WuxhHM7MA4MKF5e6hL774QkOGDFG3bt20cOFCffnll/5tp+8UevHFFxUXF6cbb7xRkrR69WotW7bsvKeQALQd2yuqA04JfZuRVOmp0/aKauVm8TgDAC0TltCybt06lZeXq7y8XF26dAnYdubZqCeeeEKff/65YmNj1bNnT73yyiv6/ve/H46SAITBkZqzB5ZQ5gHAuQR1TUtbxDUtQPSU7D2qsS+c/ynWf5p6M0daAAQI5fOb7x4CELKBmclKcyXobFerOPT1XUQDM5s+owkAgkVoARCydjEOFYzKlqQmweX0esGobC7CBdAqCC0AWiS/d5qWTOgvtyshYNztSuB2ZwCtKiwX4gK4tOT3TtMd2W5tr6jWkZo6pSR+fUqIIywAWhOhBUCraBfj4GJbAGHF6SEAAGAFQgsAALACoQUAAFiB0AIAAKxAaAEAAFYgtAAAACsQWgAAgBUILQAAwAqEFgAAYAXrn4hrjJH09VdcAwAAO5z+3D79OX4hrA8tNTU1kqSMjIwoVwIAAIJVU1Mjl8t1QXMdJpiI0wY1Njbq0KFDSkxMlMNxcX45m9frVUZGhg4cOCCn0xntciLiUuxZujT7vhR7luj7Uur7UuxZOn/fxhjV1NQoPT1dMTEXdrWK9UdaYmJi1KVLl2iXERFOp/OS+g9eujR7li7Nvi/FniX6vpRcij1L5+77Qo+wnMaFuAAAwAqEFgAAYAVCiwXi4+NVUFCg+Pj4aJcSMZdiz9Kl2fel2LNE35dS35diz1J4+rb+QlwAAHBp4EgLAACwAqEFAABYgdACAACsQGgBAABWILS0UdXV1Ro/frycTqeSkpI0ZcoUHT9+/Lz7lZSU6Pbbb9fll18up9Op2267Tf/85z8jUHHLhdqz9PWTFUeMGCGHw6HXX389vIW2smD7rq6u1syZM9WjRw+1b99eXbt21Y9+9CN5PJ4IVh2cxYsX6+qrr1ZCQoJycnK0ffv2c85/7bXX1LNnTyUkJKhPnz56++23I1Rp6wqm7xdeeEG33nqrrrzySl155ZXKy8s777+ntijYn/VpL7/8shwOh0aPHh3eAsMk2L6PHTum6dOnKy0tTfHx8bruuuus++882J4XLVrk/72VkZGhWbNmqa6uLrg3NWiT8vPzTb9+/czWrVvNe++9Z6655hozduzYc+7z/vvvG6fTaYqKikxZWZn55JNPzCuvvGLq6uoiVHXLhNLzac8884wZMWKEkWTWrFkT3kJbWbB9f/zxx+buu+82b7zxhikvLzcbNmww1157rRkzZkwEq75wL7/8somLizPLli0z//jHP8zUqVNNUlKSOXz4cLPz//a3v5l27dqZp59+2uzatcvMmzfPXHbZZebjjz+OcOUtE2zf48aNM4sXLzYffvih2b17t5k0aZJxuVzm4MGDEa48dMH2fFpFRYW56qqrzK233mruuuuuyBTbioLt2+fzmQEDBpiRI0eaLVu2mIqKCrNp0yZTWloa4cpDF2zPK1euNPHx8WblypWmoqLC/PWvfzVpaWlm1qxZQb0voaUN2rVrl5FkPvjgA//YX/7yF+NwOMwXX3xx1v1ycnLMvHnzIlFiqwu1Z2OM+fDDD81VV11lKisrrQstLen7TK+++qqJi4sz9fX14SizRQYOHGimT5/uX29oaDDp6emmqKio2fn33HOPufPOOwPGcnJyzAMPPBDWOltbsH1/26lTp0xiYqJ58cUXw1Viqwul51OnTplbbrnF/P73vzcTJ060MrQE2/eSJUtM9+7dzcmTJyNVYqsLtufp06eb22+/PWBs9uzZ5jvf+U5Q78vpoTaopKRESUlJGjBggH8sLy9PMTEx2rZtW7P7HDlyRNu2bVNKSopuueUWpaamavDgwdqyZUukym6RUHqWpBMnTmjcuHFavHix3G53JEptVaH2/W0ej0dOp1OxsW3r68ROnjypHTt2KC8vzz8WExOjvLw8lZSUNLtPSUlJwHxJGj58+Fnnt0Wh9P1tJ06cUH19vZKTk8NVZqsKtefHH39cKSkpmjJlSiTKbHWh9P3GG28oNzdX06dPV2pqqnr37q1f/vKXamhoiFTZLRJKz7fccot27NjhP4W0b98+vf322xo5cmRQ7922fsNBklRVVaWUlJSAsdjYWCUnJ6uqqqrZffbt2ydJmj9/vhYuXKgbbrhBf/zjHzVs2DCVlZXp2muvDXvdLRFKz5I0a9Ys3XLLLbrrrrvCXWJYhNr3mb766is98cQTmjZtWjhKbJGvvvpKDQ0NSk1NDRhPTU3VJ5980uw+VVVVzc6/0H8fbUEofX/bnDlzlJ6e3iTAtVWh9Lxlyxb94Q9/UGlpaQQqDI9Q+t63b582btyo8ePH6+2331Z5ebkefvhh1dfXq6CgIBJlt0goPY8bN05fffWVBg0aJGOMTp06pQcffFD/+Z//GdR7c6Qlgh599FE5HI5zLhf6C+3bGhsbJUkPPPCAJk+erBtvvFHPPvusevTooWXLlrVmG0EJZ89vvPGGNm7cqEWLFrVu0a0gnH2fyev16s4771R2drbmz5/f8sLRJixYsEAvv/yy1qxZo4SEhGiXExY1NTW677779MILL6hTp07RLieiGhsblZKSot/97ne66aab9IMf/EA/+9nPtHTp0miXFjabNm3SL3/5S/3mN7/Rzp07tXr1ar311lt64okngnodjrRE0E9+8hNNmjTpnHO6d+8ut9utI0eOBIyfOnVK1dXVZz0FkpaWJknKzs4OGO/Vq5f2798fetEtFM6eN27cqL179yopKSlgfMyYMbr11lu1adOmFlTeMuHs+7Samhrl5+crMTFRa9as0WWXXdbSsltdp06d1K5dOx0+fDhg/PDhw2ftz+12BzW/LQql79MWLlyoBQsWaP369erbt284y2xVwfa8d+9effbZZxo1apR/7PRfvmJjY7Vnzx5lZWWFt+hWEMrPOi0tTZdddpnatWvnH+vVq5eqqqp08uRJxcXFhbXmlgql58cee0z33Xef/uM//kOS1KdPH9XW1mratGn62c9+ppiYCzyGEvTVNwi70xdn/v3vf/eP/fWvfz3nxZmNjY0mPT29yYW4N9xwg5k7d25Y620NofRcWVlpPv7444BFkvn1r39t9u3bF6nSWySUvo0xxuPxmJtvvtkMHjzY1NbWRqLUkA0cONDMmDHDv97Q0GCuuuqqc16I+6//+q8BY7m5uVZeiBtM38YY89RTTxmn02lKSkoiUWKrC6bnf/7zn03+/73rrrvM7bffbj7++GPj8/kiWXqLBPuznjt3runWrZtpaGjwjy1atMikpaWFvdbWEmzP/fv3N4888kjA2KpVq0z79u3NqVOnLvh9CS1tVH5+vrnxxhvNtm3bzJYtW8y1114bcBvswYMHTY8ePcy2bdv8Y88++6xxOp3mtddeM59++qmZN2+eSUhIMOXl5dFoIWih9PxtsuzuIWOC79vj8ZicnBzTp08fU15ebiorK/1LMP/zR8rLL79s4uPjzYoVK8yuXbvMtGnTTFJSkqmqqjLGGHPfffeZRx991D//b3/7m4mNjTULFy40u3fvNgUFBdbe8hxM3wsWLDBxcXHmf/7nfwJ+pjU1NdFqIWjB9vxttt49FGzf+/fvN4mJiWbGjBlmz5495s033zQpKSnmySefjFYLQQu254KCApOYmGj+9Kc/mX379pn//d//NVlZWeaee+4J6n0JLW3U0aNHzdixY80VV1xhnE6nmTx5csAvr4qKCiPJvPPOOwH7FRUVmS5dupgOHTqY3Nxc895770W48tCF2vOZbAwtwfb9zjvvGEnNLhUVFdFp4jyef/5507VrVxMXF2cGDhxotm7d6t82ePBgM3HixID5r776qrnuuutMXFycuf76681bb70V4YpbRzB9d+vWrdmfaUFBQeQLb4Fgf9ZnsjW0GBN83++//77Jyckx8fHxpnv37uYXv/hFm/xLx7kE03N9fb2ZP3++ycrKMgkJCSYjI8M8/PDD5v/+7/+Cek+HMcZc8IksAACAKOHuIQAAYAVCCwAAsAKhBQAAWIHQAgAArEBoAQAAViC0AAAAKxBaAACAFQgtAADACoQWAABgBUILAACwAqEFAABYgdACAACs8P8AXeCX4lF5xyQAAAAASUVORK5CYII=\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "m_arr = np.linspace(-150,150,10)\n",
+        "b_arr = np.linspace(-150,150,10)\n",
+        "mg , bg = np.meshgrid(m_arr,b_arr)\n",
+        "final = np.vstack((mg.ravel().reshape(1,100),bg.ravel().reshape(1,100))).T\n",
+        "z_arr = []\n",
+        "for i in range(final.shape[0]):\n",
+        "  z_arr.append(np.sum((y-final[i,0]*X-final[i,1])**2))\n",
+        "z_arr = np.array(z_arr).reshape(10,10)"
+      ],
+      "metadata": {
+        "id": "ko9zMrLi15ax"
+      },
+      "execution_count": 17,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import plotly.graph_objects as go\n",
+        "fig = go.Figure(data=[go.Surface(x=m_arr,y=b_arr,z=z_arr)])\n",
+        "fig.update_layout(title='cost function',autosize=False,\n",
+        "                  width=500,height=500,margin=dict(l=65, r= 50, b=65, t=90))\n",
+        "fig.show()\n",
+        "fig.write_html(\"cost function.html\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 517
+        },
+        "id": "2dsYZnx72XoU",
+        "outputId": "b2f6424d-5d93-4464-e59c-4ba14ca02390"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/html": [
+              "<html>\n",
+              "<head><meta charset=\"utf-8\" /></head>\n",
+              "<body>\n",
+              "    <div>            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG\"></script><script type=\"text/javascript\">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: \"STIX-Web\"}});}</script>                <script type=\"text/javascript\">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>\n",
+              "        <script charset=\"utf-8\" src=\"https://cdn.plot.ly/plotly-2.24.1.min.js\"></script>                <div id=\"31e30f74-b5b4-43e6-8628-158d7b6e3836\" class=\"plotly-graph-div\" style=\"height:500px; width:500px;\"></div>            <script type=\"text/javascript\">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById(\"31e30f74-b5b4-43e6-8628-158d7b6e3836\")) {                    Plotly.newPlot(                        \"31e30f74-b5b4-43e6-8628-158d7b6e3836\",                        [{\"x\":[-150.0,-116.66666666666666,-83.33333333333333,-50.0,-16.666666666666657,16.666666666666686,50.0,83.33333333333334,116.66666666666669,150.0],\"y\":[-150.0,-116.66666666666666,-83.33333333333333,-50.0,-16.666666666666657,16.666666666666686,50.0,83.33333333333334,116.66666666666669,150.0],\"z\":[[830397.5081661202,762694.1971648327,706384.4783626487,661468.3517595686,627945.8173555917,605816.8751507183,595081.5251449484,595739.767338282,607791.601730719,631237.0283222594],[632949.6775324728,569234.6774380018,516913.2695426345,475985.45384637057,446451.23034921015,428310.59905115317,421563.55995219975,426210.11305234977,442250.2583516032,469683.99584996013],[471057.402454381,411330.7132667265,362997.61627817573,326058.11148872814,300512.19889838423,286359.87850714376,283601.1503150068,292236.0143219732,312264.4705280431,343686.5189332165],[344720.6829318448,288982.3046510068,244637.51856927236,211686.3246866414,190128.72300311388,179964.71351868985,181194.2962333693,193817.47114715222,217834.2382600386,253244.59757202846],[253939.5189648641,202189.45159084263,161832.9764159246,132870.0934401101,115300.80266339905,109125.10408579148,114342.99770728737,130954.48352788677,158959.56154758963,198358.2317663959],[198713.91055343903,150952.154086234,114583.98981813245,89609.41774913439,76028.43787923979,73841.05020844868,83047.25473676104,103647.05146417688,135640.4403906962,179027.42151631892],[179043.85769756953,135270.41213718095,102890.55877589586,81904.29761371424,72311.62865063609,74112.55188666144,87307.06732179024,111895.17495602253,147876.87478935832,195252.1668217975],[194929.36039725557,155144.22574368343,126752.68328921482,109754.73303384964,104150.37497758797,109939.60912042976,127122.43546237503,155698.85400342377,195668.86474357598,247032.46768283163],[246370.41865249714,210573.5949057415,186170.36335808935,173160.72400954063,171544.6768600954,181322.22190975366,202493.35915851538,235058.08860638057,279016.4102533493,334368.32409942144],[333367.0324632943,301558.519623355,281143.59898251935,272122.2705407871,274494.53429815837,288260.39025463304,313419.83841021114,349972.87876489287,397919.511318678,457259.7360715666]],\"type\":\"surface\"}],                        {\"template\":{\"data\":{\"histogram2dcontour\":[{\"type\":\"histogram2dcontour\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"choropleth\":[{\"type\":\"choropleth\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"histogram2d\":[{\"type\":\"histogram2d\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"heatmap\":[{\"type\":\"heatmap\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"heatmapgl\":[{\"type\":\"heatmapgl\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"contourcarpet\":[{\"type\":\"contourcarpet\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"contour\":[{\"type\":\"contour\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"surface\":[{\"type\":\"surface\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"mesh3d\":[{\"type\":\"mesh3d\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"scatter\":[{\"fillpattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2},\"type\":\"scatter\"}],\"parcoords\":[{\"type\":\"parcoords\",\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterpolargl\":[{\"type\":\"scatterpolargl\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"bar\":[{\"error_x\":{\"color\":\"#2a3f5f\"},\"error_y\":{\"color\":\"#2a3f5f\"},\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"bar\"}],\"scattergeo\":[{\"type\":\"scattergeo\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterpolar\":[{\"type\":\"scatterpolar\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"histogram\":[{\"marker\":{\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"histogram\"}],\"scattergl\":[{\"type\":\"scattergl\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatter3d\":[{\"type\":\"scatter3d\",\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scattermapbox\":[{\"type\":\"scattermapbox\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterternary\":[{\"type\":\"scatterternary\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scattercarpet\":[{\"type\":\"scattercarpet\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"carpet\":[{\"aaxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"baxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"type\":\"carpet\"}],\"table\":[{\"cells\":{\"fill\":{\"color\":\"#EBF0F8\"},\"line\":{\"color\":\"white\"}},\"header\":{\"fill\":{\"color\":\"#C8D4E3\"},\"line\":{\"color\":\"white\"}},\"type\":\"table\"}],\"barpolar\":[{\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"barpolar\"}],\"pie\":[{\"automargin\":true,\"type\":\"pie\"}]},\"layout\":{\"autotypenumbers\":\"strict\",\"colorway\":[\"#636efa\",\"#EF553B\",\"#00cc96\",\"#ab63fa\",\"#FFA15A\",\"#19d3f3\",\"#FF6692\",\"#B6E880\",\"#FF97FF\",\"#FECB52\"],\"font\":{\"color\":\"#2a3f5f\"},\"hovermode\":\"closest\",\"hoverlabel\":{\"align\":\"left\"},\"paper_bgcolor\":\"white\",\"plot_bgcolor\":\"#E5ECF6\",\"polar\":{\"bgcolor\":\"#E5ECF6\",\"angularaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"radialaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"ternary\":{\"bgcolor\":\"#E5ECF6\",\"aaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"baxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"caxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"coloraxis\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"colorscale\":{\"sequential\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"sequentialminus\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"diverging\":[[0,\"#8e0152\"],[0.1,\"#c51b7d\"],[0.2,\"#de77ae\"],[0.3,\"#f1b6da\"],[0.4,\"#fde0ef\"],[0.5,\"#f7f7f7\"],[0.6,\"#e6f5d0\"],[0.7,\"#b8e186\"],[0.8,\"#7fbc41\"],[0.9,\"#4d9221\"],[1,\"#276419\"]]},\"xaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"automargin\":true,\"zerolinewidth\":2},\"yaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"automargin\":true,\"zerolinewidth\":2},\"scene\":{\"xaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2},\"yaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2},\"zaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2}},\"shapedefaults\":{\"line\":{\"color\":\"#2a3f5f\"}},\"annotationdefaults\":{\"arrowcolor\":\"#2a3f5f\",\"arrowhead\":0,\"arrowwidth\":1},\"geo\":{\"bgcolor\":\"white\",\"landcolor\":\"#E5ECF6\",\"subunitcolor\":\"white\",\"showland\":true,\"showlakes\":true,\"lakecolor\":\"white\"},\"title\":{\"x\":0.05},\"mapbox\":{\"style\":\"light\"}}},\"margin\":{\"l\":65,\"r\":50,\"b\":65,\"t\":90},\"title\":{\"text\":\"cost function\"},\"autosize\":false,\"width\":500,\"height\":500},                        {\"responsive\": true}                    ).then(function(){\n",
+              "                            \n",
+              "var gd = document.getElementById('31e30f74-b5b4-43e6-8628-158d7b6e3836');\n",
+              "var x = new MutationObserver(function (mutations, observer) {{\n",
+              "        var display = window.getComputedStyle(gd).display;\n",
+              "        if (!display || display === 'none') {{\n",
+              "            console.log([gd, 'removed!']);\n",
+              "            Plotly.purge(gd);\n",
+              "            observer.disconnect();\n",
+              "        }}\n",
+              "}});\n",
+              "\n",
+              "// Listen for the removal of the full notebook cells\n",
+              "var notebookContainer = gd.closest('#notebook-container');\n",
+              "if (notebookContainer) {{\n",
+              "    x.observe(notebookContainer, {childList: true});\n",
+              "}}\n",
+              "\n",
+              "// Listen for the clearing of the current output cell\n",
+              "var outputEl = gd.closest('.output');\n",
+              "if (outputEl) {{\n",
+              "    x.observe(outputEl, {childList: true});\n",
+              "}}\n",
+              "\n",
+              "                        })                };                            </script>        </div>\n",
+              "</body>\n",
+              "</html>"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "b=150\n",
+        "m=-127.82\n",
+        "lr=0.001\n",
+        "all_b=[]\n",
+        "all_m=[]\n",
+        "all_cost=[]\n",
+        "epochs = 30\n",
+        "for i in range(epochs):\n",
+        "  slope_b=0\n",
+        "  slope_m=0\n",
+        "  cost=0\n",
+        "  for j in range(X.shape[0]):\n",
+        "    slope_b = slope_b-2*(y[j]-(m*X[j])-b)\n",
+        "    slope_m =slope_b-2*(y[j]-(m*X[j])-b)*X[j]\n",
+        "    cost = cost+(y[j]-m*X[j]-b)**2\n",
+        "    b=b-(lr*slope_b)\n",
+        "    m=m-(lr*slope_m)\n",
+        "    all_b.append(b)\n",
+        "    all_m.append(m)\n",
+        "    all_cost.append(cost)"
+      ],
+      "metadata": {
+        "id": "oB-9XKkZ2cGN"
+      },
+      "execution_count": 19,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import plotly.express as px\n",
+        "fig = px.scatter_3d(x=np.array(all_m).ravel(),y=np.array(all_b).ravel(),z=np.array(all_cost).ravel()*100)\n",
+        "fig.add_trace(go.Surface(x=m_arr,y=b_arr,z=z_arr*100))\n",
+        "fig.show()\n",
+        "fig.write_html(\"cost_function2.html\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 542
+        },
+        "id": "9IpMvbWz2h-9",
+        "outputId": "1ef91df3-590a-491c-d5d9-0e70fdf227d8"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/html": [
+              "<html>\n",
+              "<head><meta charset=\"utf-8\" /></head>\n",
+              "<body>\n",
+              "    <div>            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG\"></script><script type=\"text/javascript\">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: \"STIX-Web\"}});}</script>                <script type=\"text/javascript\">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>\n",
+              "        <script charset=\"utf-8\" src=\"https://cdn.plot.ly/plotly-2.24.1.min.js\"></script>                <div id=\"d7bd83c2-a446-4316-a5e5-a7068441b169\" class=\"plotly-graph-div\" style=\"height:525px; width:100%;\"></div>            <script type=\"text/javascript\">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById(\"d7bd83c2-a446-4316-a5e5-a7068441b169\")) {                    Plotly.newPlot(                        \"d7bd83c2-a446-4316-a5e5-a7068441b169\",                        [{\"hovertemplate\":\"x=%{x}\\u003cbr\\u003ey=%{y}\\u003cbr\\u003ez=%{z}\\u003cextra\\u003e\\u003c\\u002fextra\\u003e\",\"legendgroup\":\"\",\"marker\":{\"color\":\"#636efa\",\"symbol\":\"circle\"},\"mode\":\"markers\",\"name\":\"\",\"scene\":\"scene\",\"showlegend\":false,\"x\":[-127.95450908277378,-128.64192010262244,-129.60965966719598,-130.26346620593063,-130.39732776340944,-131.07096623168627,-132.0232713569103,-132.64506241708472,-132.7782816468038,-133.43840095803063,-134.37554768147106,-134.96595053899665,-135.09853256415113,-135.74538155224744,-136.66764096602384,-137.2272714977325,-137.35922136845443,-137.993044388529,-138.9006827279419,-139.43014561634124,-139.56146831095404,-140.18250531963068,-141.07578405020044,-141.57567298455817,-141.70637341080865,-142.31486004511194,-143.19403594805783,-143.66493382188088,-143.79501681814935,-144.39118447297665,-145.2565097291639,-145.6989888341369,-145.82845917062585,-146.4125350748305,-147.26425734721292,-147.67887956365985,-147.80774194356133,-148.37994923467227,-149.21831174925737,-149.60562873318798,-149.7338877938304,-150.29444559143244,-151.1196872167954,-151.48024058359854,-151.60790089757293,-152.15702437537172,-152.9693797007444,-153.3037012055875,-153.43076728185378,-153.96866773844908,-154.7683671504096,-155.07697886540382,-155.2034551503775,-155.73034007876794,-156.51760983655572,-156.8010243247447,-156.92691520336408,-157.442988359206,-158.21805066868706,-158.47677115491607,-158.60208095169062,-159.10754242033354,-159.87061550664023,-160.10513604536166,-160.22986902540174,-160.72491528772213,-161.47621346659105,-161.68701910666118,-161.8111794766894,-162.29600347374443,-163.03573722157577,-163.22330416809683,-163.3468960774415,-163.82168727396407,-164.5500632966254,-164.7148590698857,-164.83788661145658,-165.30283105821204,-166.02005235860904,-166.16253595017332,-166.28500316142018,-166.74028355644538,-167.44654950088153,-167.5671715268826,-167.68908239073647,-168.1348781394812,-168.83038452282824,-168.92958737450988,-169.05094582030793,-169.48743309469828,-170.1723722043986,-170.2505901959594,-170.37140010035316,-170.79875189679623,-171.47331257571844,-171.53097208950444,-171.6512372773519,-172.06962347370077,-172.73399118186845,-172.77151081096255,-172.89123505620458,-173.30082246770215,-173.95517934291664,-173.97297003117117,-174.09215705769228,-174.4931094919124,-175.13763440928895,-175.13609958884723,-175.25475307132103,-175.6472313821249,-176.2821000125618,-176.26163573891398,-176.37975930363373,-176.76392144415883,-177.38930631175887,-177.3503013963757,-177.46789862207007,-177.84389969676963,-178.45997023523216,-178.40280637582086],\"y\":[149.532320182186,148.91329077450388,147.92930973905,147.1335946555136,146.6681662433723,146.05932394048295,145.09102174342956,144.32030067297057,143.85710559499114,143.25827023624544,142.30536637447798,141.5591610836564,141.09818152680415,140.50917617330893,139.57139516944162,138.84923608463953,138.39045448991553,137.811105366814,136.8881766791228,136.18960273108203,135.7330017891616,135.16313822894833,134.25479616291847,133.57935463406523,133.12491728101423,132.5643716678658,131.67035528932416,131.0176016638306,130.56531107689787,130.0139187920013,129.13397184180593,128.50346965833978,128.0533092518244,127.51090861968527,126.64477942994357,126.03610013705749,125.58805355824948,125.05448579396224,124.20192720575092,123.61465001986426,123.16870114505767,122.64381030252098,121.8045795850804,121.2382913510071,120.79442428158383,120.27805720264388,119.45191597402074,118.90621102799751,118.46441008658081,117.95641635108605,117.1431305001982,116.61761053536829,116.17786026204469,115.67809213879559,114.87743174889366,114.37170568320214,113.9339908318105,113.44230323038839,112.65404250388906,112.16772635034648,111.732031884833,111.24828230829208,110.47219949295858,110.0049162322305,109.57122732306853,109.09527582147577,108.33115313792122,107.88253259320189,107.45083461387533,106.98254373868292,106.23016730917308,105.7998460233024,105.3701245468516,104.90935930608708,104.16851908461896,103.75614019940251,103.32838099503158,102.875008809291,102.14549851292469,101.75071165061728,101.32490068036155,100.87879133959127,100.16040838101239,99.78286952792642,99.3589929433792,98.92001856443217,98.2125639857229,97.85193537792343,97.42997951702085,96.99801450197351,96.30129290957059,95.95724292061968,95.53719430448264,95.11211529969884,94.42593480051727,94.09813783123089,93.67998316106298,93.26166901699146,92.58584115569289,92.27397752587439,91.85770367991503,91.44603541160738,90.78037510899289,90.48413095110747,90.06972498163904,89.66458572997514,89.00891122248198,88.72797837723755,88.31542750764557,87.91670250125398,87.27083528153678,87.00491119533676,86.59420281722235,86.20177933508305,85.56554409365985,85.31433171789475,84.90545338823829,84.51922072295557,83.89244529089967,83.65565298304409],\"z\":[5468110.299763644,6040777.758594789,9370520.023926068,10256621.740210924,5415590.170709753,5929778.772196916,9160064.160007607,10136021.699665539,5363742.006609398,5823699.150768131,8957811.771569623,10025919.252346119,5312553.795892099,5722318.911043948,8763430.268355802,9925750.567890072,5262013.791437593,5625427.013914208,8576599.944004735,9834976.174094897,5212110.504065651,5532821.021629397,8397013.494125344,9753079.999554288,5162832.696199576,5444306.767722228,8224375.552020723,9679568.452229217,5114169.375698298,5359698.039181273,8058402.241421891,9613969.532637116,5066109.789852337,5278816.27043036,7898820.745616238,9555831.980390366,5018643.4195388835,5201490.248683269,7745368.892377245,9504724.452860743,4971759.973531523,5127555.830259066,7597794.754123682,9460234.734791148,4925449.38296019,5056855.667458151,7455856.262756689,9421968.977718264,4879701.795917079,4989238.945613611,7319320.838643254,9389550.968111083,4834507.572204404,4924561.129946417,7187965.033233513,9362621.423169926,4789857.278219975,4862683.721866313,7061574.184817808,9340837.313268656,4745741.681976734,4803474.024373262,6939942.086947156,9323871.210059788,4702151.748252448,4746804.916226735,6822870.669057958,9311410.65929768,4659078.63386593,4692554.634562154,6710169.6888582,9303157.577469176,4616513.683076228,4640606.565645388,6601656.436048429,9298827.671354195,4574448.423101346,4590849.043467393,6497155.446966062,9298149.879670583,4532874.559753147,4543175.155891799,6396498.2297564,9300865.83598812,4491783.97318523,4497482.558078715,6299522.99968802,9306729.35212632,4451168.713750602,4453673.292917948,6206074.4242439745,9315505.921279103,4411020.997966121,4411653.618214554,6116003.377633431,9326972.240136866,4371333.20458075,4371333.840378898,6029166.704381309,9340915.749303127,4332097.870744727,4332628.154382372,5945426.991665648,9357134.191328313,4293307.6882769205,4295454.489748644,5864652.350084502,9375435.185708031,4254955.500027599,4259734.362358498,5786716.202545464,9395635.820216795,4217034.296334031,4225392.731854527,5711497.080982076,9417562.257971138,4179537.211566382,4192357.8644395894,5638878.430612078,9441049.359638128],\"type\":\"scatter3d\"},{\"x\":[-150.0,-116.66666666666666,-83.33333333333333,-50.0,-16.666666666666657,16.666666666666686,50.0,83.33333333333334,116.66666666666669,150.0],\"y\":[-150.0,-116.66666666666666,-83.33333333333333,-50.0,-16.666666666666657,16.666666666666686,50.0,83.33333333333334,116.66666666666669,150.0],\"z\":[[83039750.81661202,76269419.71648328,70638447.83626488,66146835.17595685,62794581.735559165,60581687.515071824,59508152.51449484,59573976.733828194,60779160.1730719,63123702.83222594],[63294967.753247276,56923467.743800186,51691326.95426345,47598545.38463706,44645123.03492101,42831059.905115314,42156355.995219976,42621011.305234976,44225025.835160315,46968399.584996015],[47105740.2454381,41133071.32667265,36299761.62781757,32605811.148872815,30051219.889838424,28635987.850714374,28360115.03150068,29223601.43219732,31226447.05280431,34368651.89332165],[34472068.29318448,28898230.465100683,24463751.856927235,21168632.46866414,19012872.300311387,17996471.351868987,18119429.62333693,19381747.114715222,21783423.82600386,25324459.757202845],[25393951.896486413,20218945.159084264,16183297.641592462,13287009.344011009,11530080.266339906,10912510.408579148,11434299.770728737,13095448.352788677,15895956.154758964,19835823.17663959],[19871391.055343904,15095215.4086234,11458398.981813245,8960941.77491344,7602843.787923979,7384105.020844868,8304725.473676104,10364705.146417689,13564044.039069619,17902742.15163189],[17904385.769756954,13527041.213718094,10289055.877589585,8190429.761371424,7231162.86506361,7411255.188666144,8730706.732179023,11189517.495602254,14787687.478935832,19525216.68217975],[19492936.039725557,15514422.574368343,12675268.328921482,10975473.303384963,10415037.497758796,10993960.912042975,12712243.546237502,15569885.400342377,19566886.474357598,24703246.768283162],[24637041.865249716,21057359.49057415,18617036.335808937,17316072.400954064,17154467.68600954,18132222.190975364,20249335.915851537,23505808.860638056,27901641.02533493,33436832.409942143],[33336703.246329427,30155851.9623355,28114359.898251936,27212227.05407871,27449453.429815836,28826039.025463305,31341983.841021113,34997287.87648929,39791951.131867796,45725973.60715666]],\"type\":\"surface\"}],                        {\"template\":{\"data\":{\"histogram2dcontour\":[{\"type\":\"histogram2dcontour\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"choropleth\":[{\"type\":\"choropleth\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"histogram2d\":[{\"type\":\"histogram2d\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"heatmap\":[{\"type\":\"heatmap\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"heatmapgl\":[{\"type\":\"heatmapgl\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"contourcarpet\":[{\"type\":\"contourcarpet\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"contour\":[{\"type\":\"contour\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"surface\":[{\"type\":\"surface\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"},\"colorscale\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]]}],\"mesh3d\":[{\"type\":\"mesh3d\",\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}],\"scatter\":[{\"fillpattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2},\"type\":\"scatter\"}],\"parcoords\":[{\"type\":\"parcoords\",\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterpolargl\":[{\"type\":\"scatterpolargl\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"bar\":[{\"error_x\":{\"color\":\"#2a3f5f\"},\"error_y\":{\"color\":\"#2a3f5f\"},\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"bar\"}],\"scattergeo\":[{\"type\":\"scattergeo\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterpolar\":[{\"type\":\"scatterpolar\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"histogram\":[{\"marker\":{\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"histogram\"}],\"scattergl\":[{\"type\":\"scattergl\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatter3d\":[{\"type\":\"scatter3d\",\"line\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scattermapbox\":[{\"type\":\"scattermapbox\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scatterternary\":[{\"type\":\"scatterternary\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"scattercarpet\":[{\"type\":\"scattercarpet\",\"marker\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}}}],\"carpet\":[{\"aaxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"baxis\":{\"endlinecolor\":\"#2a3f5f\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"minorgridcolor\":\"white\",\"startlinecolor\":\"#2a3f5f\"},\"type\":\"carpet\"}],\"table\":[{\"cells\":{\"fill\":{\"color\":\"#EBF0F8\"},\"line\":{\"color\":\"white\"}},\"header\":{\"fill\":{\"color\":\"#C8D4E3\"},\"line\":{\"color\":\"white\"}},\"type\":\"table\"}],\"barpolar\":[{\"marker\":{\"line\":{\"color\":\"#E5ECF6\",\"width\":0.5},\"pattern\":{\"fillmode\":\"overlay\",\"size\":10,\"solidity\":0.2}},\"type\":\"barpolar\"}],\"pie\":[{\"automargin\":true,\"type\":\"pie\"}]},\"layout\":{\"autotypenumbers\":\"strict\",\"colorway\":[\"#636efa\",\"#EF553B\",\"#00cc96\",\"#ab63fa\",\"#FFA15A\",\"#19d3f3\",\"#FF6692\",\"#B6E880\",\"#FF97FF\",\"#FECB52\"],\"font\":{\"color\":\"#2a3f5f\"},\"hovermode\":\"closest\",\"hoverlabel\":{\"align\":\"left\"},\"paper_bgcolor\":\"white\",\"plot_bgcolor\":\"#E5ECF6\",\"polar\":{\"bgcolor\":\"#E5ECF6\",\"angularaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"radialaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"ternary\":{\"bgcolor\":\"#E5ECF6\",\"aaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"baxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"},\"caxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\"}},\"coloraxis\":{\"colorbar\":{\"outlinewidth\":0,\"ticks\":\"\"}},\"colorscale\":{\"sequential\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"sequentialminus\":[[0.0,\"#0d0887\"],[0.1111111111111111,\"#46039f\"],[0.2222222222222222,\"#7201a8\"],[0.3333333333333333,\"#9c179e\"],[0.4444444444444444,\"#bd3786\"],[0.5555555555555556,\"#d8576b\"],[0.6666666666666666,\"#ed7953\"],[0.7777777777777778,\"#fb9f3a\"],[0.8888888888888888,\"#fdca26\"],[1.0,\"#f0f921\"]],\"diverging\":[[0,\"#8e0152\"],[0.1,\"#c51b7d\"],[0.2,\"#de77ae\"],[0.3,\"#f1b6da\"],[0.4,\"#fde0ef\"],[0.5,\"#f7f7f7\"],[0.6,\"#e6f5d0\"],[0.7,\"#b8e186\"],[0.8,\"#7fbc41\"],[0.9,\"#4d9221\"],[1,\"#276419\"]]},\"xaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"automargin\":true,\"zerolinewidth\":2},\"yaxis\":{\"gridcolor\":\"white\",\"linecolor\":\"white\",\"ticks\":\"\",\"title\":{\"standoff\":15},\"zerolinecolor\":\"white\",\"automargin\":true,\"zerolinewidth\":2},\"scene\":{\"xaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2},\"yaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2},\"zaxis\":{\"backgroundcolor\":\"#E5ECF6\",\"gridcolor\":\"white\",\"linecolor\":\"white\",\"showbackground\":true,\"ticks\":\"\",\"zerolinecolor\":\"white\",\"gridwidth\":2}},\"shapedefaults\":{\"line\":{\"color\":\"#2a3f5f\"}},\"annotationdefaults\":{\"arrowcolor\":\"#2a3f5f\",\"arrowhead\":0,\"arrowwidth\":1},\"geo\":{\"bgcolor\":\"white\",\"landcolor\":\"#E5ECF6\",\"subunitcolor\":\"white\",\"showland\":true,\"showlakes\":true,\"lakecolor\":\"white\"},\"title\":{\"x\":0.05},\"mapbox\":{\"style\":\"light\"}}},\"scene\":{\"domain\":{\"x\":[0.0,1.0],\"y\":[0.0,1.0]},\"xaxis\":{\"title\":{\"text\":\"x\"}},\"yaxis\":{\"title\":{\"text\":\"y\"}},\"zaxis\":{\"title\":{\"text\":\"z\"}}},\"legend\":{\"tracegroupgap\":0},\"margin\":{\"t\":60}},                        {\"responsive\": true}                    ).then(function(){\n",
+              "                            \n",
+              "var gd = document.getElementById('d7bd83c2-a446-4316-a5e5-a7068441b169');\n",
+              "var x = new MutationObserver(function (mutations, observer) {{\n",
+              "        var display = window.getComputedStyle(gd).display;\n",
+              "        if (!display || display === 'none') {{\n",
+              "            console.log([gd, 'removed!']);\n",
+              "            Plotly.purge(gd);\n",
+              "            observer.disconnect();\n",
+              "        }}\n",
+              "}});\n",
+              "\n",
+              "// Listen for the removal of the full notebook cells\n",
+              "var notebookContainer = gd.closest('#notebook-container');\n",
+              "if (notebookContainer) {{\n",
+              "    x.observe(notebookContainer, {childList: true});\n",
+              "}}\n",
+              "\n",
+              "// Listen for the clearing of the current output cell\n",
+              "var outputEl = gd.closest('.output');\n",
+              "if (outputEl) {{\n",
+              "    x.observe(outputEl, {childList: true});\n",
+              "}}\n",
+              "\n",
+              "                        })                };                            </script>        </div>\n",
+              "</body>\n",
+              "</html>"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    }
+  ]
+}
